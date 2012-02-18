@@ -6,30 +6,52 @@ function main() {
     //alert("hello world!");
 	
 	var i = 0;
+	var textArray = new Array();
+	var notFirst = false;
 	
 	var s = new Spotter("twitter.search",
 						{q:"bieber", period:120},
 						{buffer:true, bufferTimeout:750}
 						);
 	s.register(function(tweet) {
-		
-		//stuff to do when spotter do
+		var text = "<p id='theContent'>";
+		var newTweet = new Array();
+		newTweet = tweet.text.split(" ");
+		textArray.concat(newTweet);
+		textArray.sort(randomSort);
+		for (int i=0 ; i<textArray.length ; i++)
+			text.concat(newTweet[i] + " ");
+		}
+		text.concat(".</p>")
+		if (notFirst) {
+			$(#"content").append(text);
+		} else {
+			//remove the search box and button
+			$(#"content").append(text);
+			notFirst = true;
+		}
 
 	});
 	
 	s.start();
 
-    //your tasks
-
-    //1. Create a spotter and get it to insert tweets into the DOM
-    //2. Add profile images (tweet.profile_image_url)
-    //3. Make the tweets occur so the most recent are at the top
-    //4. Make the tweets slide down
-    //5. Alternate the colors or the background of the tweets
-    //6. Show a maximum of 10 tweets at a time (remove old tweets from the dom)
-
 
 }
+
+function randomSort(a,b) {
+    // Get a random number between 0 and 10
+    var temp = parseInt( Math.random()*10 );
+
+    // Get 1 or 0, whether temp is odd or even
+    var isOddOrEven = temp%2;
+
+    // Get +1 or -1, whether temp greater or smaller than 5
+    var isPosOrNeg = temp>5 ? 1 : -1;
+
+    // Return -1, 0, or +1
+    return( isOddOrEven*isPosOrNeg );
+}
+
 
 $(document).ready(function() {
 	main();
