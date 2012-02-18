@@ -26,7 +26,7 @@ function main() {
 		if (notFirst) {
 			$(#"content").append(text);
 		} else {
-			//remove the search box and button
+			$(#"removeMe").remove();
 			$(#"content").append(text);
 			notFirst = true;
 		}
