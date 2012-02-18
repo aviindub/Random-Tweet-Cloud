@@ -9,8 +9,9 @@ function main() {
 	var textArray = new Array();
 	var notFirst = false;
 	
+	var searchTerm = $(#"startButton").value;
 	var s = new Spotter("twitter.search",
-						{q:"bieber", period:120},
+						{q:searchTerm, period:120},
 						{buffer:true, bufferTimeout:750}
 						);
 	s.register(function(tweet) {
@@ -24,6 +25,7 @@ function main() {
 		}
 		text.concat(".</p>")
 		if (notFirst) {
+			$(#"theContent").remove();
 			$(#"content").append(text);
 		} else {
 			$(#"removeMe").remove();
@@ -52,7 +54,8 @@ function randomSort(a,b) {
     return( isOddOrEven*isPosOrNeg );
 }
 
-
+/**
 $(document).ready(function() {
 	main();
 });
+**/
