@@ -26,7 +26,7 @@ function main() {
 			text = text + textArray[i] + " ";
 		}
 		text = text + ".</p>";
-		alert(text);
+		//alert(text);
 		if (notFirst) {
 			$("#theContent").remove();
 			$("#content").append(text);
