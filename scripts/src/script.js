@@ -21,12 +21,10 @@ function main() {
 		newTweet = tweet.text.split(" ");
 		textArray = textArray.concat(newTweet);
 		textArray.sort(randomSort);
-		alert(newTweet.toString());
+		//alert(newTweet.toString());
 		for (var i=0 ; i<textArray.length ; i++) {
-			//text.concat(textArray[i] + " ");
 			text = text + textArray[i] + " ";
 		}
-		//text.concat(".</p>");
 		text = text + ".</p>";
 		alert(text);
 		if (notFirst) {
