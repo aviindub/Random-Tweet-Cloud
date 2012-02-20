@@ -9,7 +9,8 @@ function main() {
 	var textArray = new Array();
 	var notFirst = false;
 	
-	var searchTerm = $(#"startButton").value;
+	var searchTerm = $("#search_term_input").val();
+	//alert(searchTerm);
 	var s = new Spotter("twitter.search",
 						{q:searchTerm, period:120},
 						{buffer:true, bufferTimeout:750}
@@ -18,26 +19,31 @@ function main() {
 		var text = "<p id='theContent'>";
 		var newTweet = new Array();
 		newTweet = tweet.text.split(" ");
-		textArray.concat(newTweet);
+		textArray = textArray.concat(newTweet);
 		textArray.sort(randomSort);
-		for (int i=0 ; i<textArray.length ; i++)
-			text.concat(newTweet[i] + " ");
+		alert(newTweet.toString());
+		for (var i=0 ; i<textArray.length ; i++) {
+			//text.concat(textArray[i] + " ");
+			text = text + textArray[i] + " ";
 		}
-		text.concat(".</p>")
+		//text.concat(".</p>");
+		text = text + ".</p>";
+		alert(text);
 		if (notFirst) {
-			$(#"theContent").remove();
-			$(#"content").append(text);
+			$("#theContent").remove();
+			$("#content").append(text);
 		} else {
-			$(#"removeMe").remove();
-			$(#"content").append(text);
+			$("#removeMe").remove();
+			$("#content").append(text);
 			notFirst = true;
 		}
+		
+		
 
 	});
 	
 	s.start();
-
-
+	
 }
 
 function randomSort(a,b) {
@@ -54,8 +60,9 @@ function randomSort(a,b) {
     return( isOddOrEven*isPosOrNeg );
 }
 
-/**
+
 $(document).ready(function() {
-	main();
+	$("#startButton").click(function(){
+		main();
+	});
 });
-**/
