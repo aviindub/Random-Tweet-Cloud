@@ -1,5 +1,5 @@
 /**
- * This is the entry point for our JavaScript program
+ * help: fadeout not working -- how to save as jq object to fade in -- regex for word counts
  */
 function main() {
 
@@ -50,10 +50,19 @@ function main() {
 		text = text + ".</p>";
 		//alert(text);
 		if (notFirst) {
+			$("#theContent").fadeOut();
 			$("#theContent").remove();
-			$("#content").append(text);
+			var contentObject = $(text);
+			contentObject.hide();
+			$("#content").append(contentObject);
+			contentObject.fadeIn();
+			$("#theWordCounts").fadeOut();
 			$("#theWordCounts").remove();
-			$("#wordCountsDiv").append(wordCountsString);
+			var wordCountsObject = $(wordCountsString);
+			wordCountsObject.hide();
+			$("#wordCountsDiv").append(wordCountsObject);
+			wordCountsObject.fadeIn();
+			
 		} 
 		else {
 			$("#removeMe").remove();
