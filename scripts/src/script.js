@@ -8,6 +8,8 @@ function main() {
 	var i = 0;
 	var textArray = new Array();
 	var notFirst = false;
+	var wordCounts = {};
+	var wordCountsString;
 	
 	var searchTerm = $("#search_term_input").val();
 	//alert(searchTerm);
@@ -19,7 +21,27 @@ function main() {
 		var text = "<p id='theContent'>";
 		var newTweet = new Array();
 		newTweet = tweet.text.split(" ");
+		
+		//add words in newTweet to the word counts
+		for (var i=0 ; i<newTweet.length ; i++) {
+			var word = newTweet[i];
+			if (wordCounts[word] === undefined) {
+				wordCounts[word] = 1;
+			}
+			else {
+				wordCounts[word]++;
+			}
+		}
+		//turn wordCounts object in to a String
+		wordCountsString = "<p id='theWordCounts'>";
+		for (var w in wordCounts) {
+			wordCountsString += w + ": " + wordCounts[w] + " - ";
+		}
+		wordCountsString += "</p>";
+		//alert(wordCountsString);
+		
 		textArray = textArray.concat(newTweet);
+		textArray.sort(randomSort);
 		textArray.sort(randomSort);
 		//alert(newTweet.toString());
 		for (var i=0 ; i<textArray.length ; i++) {
@@ -30,13 +52,15 @@ function main() {
 		if (notFirst) {
 			$("#theContent").remove();
 			$("#content").append(text);
-		} else {
+			$("#theWordCounts").remove();
+			$("#wordCountsDiv").append(wordCountsString);
+		} 
+		else {
 			$("#removeMe").remove();
 			$("#content").append(text);
+			$("#wordCountsDiv").append(wordCountsString);
 			notFirst = true;
 		}
-		
-		
 
 	});
 	
