@@ -1,22 +1,25 @@
 /**
- * help: fadeout not working -- how to save as jq object to fade in -- regex for word counts
+ * 
  */
 function main() {
 
-    //alert("hello world!");
-	
+
 	var i = 0;
 	var textArray = new Array();
 	var notFirst = false;
 	var wordCounts = {};
 	var wordCountsString;
 	
+	//get the search term from the input box
 	var searchTerm = $("#search_term_input").val();
-	//alert(searchTerm);
+	
+	//initialize spotter
 	var s = new Spotter("twitter.search",
 						{q:searchTerm, period:120},
 						{buffer:true, bufferTimeout:750}
 						);
+	
+	//define callback function that will run each time spotter polls
 	s.register(function(tweet) {
 		var text = "<p id='theContent'>";
 		var newTweet = new Array();
@@ -24,7 +27,7 @@ function main() {
 		
 		//add words in newTweet to the word counts
 		for (var i=0 ; i<newTweet.length ; i++) {
-			var word = newTweet[i];
+			var word = newTweet[i].toLowerCase();
 			if (wordCounts[word] === undefined) {
 				wordCounts[word] = 1;
 			}
@@ -38,18 +41,31 @@ function main() {
 			wordCountsString += w + ": " + wordCounts[w] + " - ";
 		}
 		wordCountsString += "</p>";
-		//alert(wordCountsString);
-		
+
+		//add the new tweet to the textArray and randomize
+		//then randomize again for extra goodness
 		textArray = textArray.concat(newTweet);
 		textArray.sort(randomSort);
 		textArray.sort(randomSort);
-		//alert(newTweet.toString());
+
+		
+		//assemble the textArray in to a string and add font sizes to words that appear multiple times
 		for (var i=0 ; i<textArray.length ; i++) {
-			text = text + textArray[i] + " ";
+			if (wordCounts[textArray[i].toLowerCase()] === 1) {
+				text = text + textArray[i] + " ";
+			}
+			else if (wordCounts[textArray[i].toLowerCase()] > 5) {
+				text = text + "<font size='5'>" + textArray[i] + " </font>" ;
+			}
+			else {
+				text = text + "<font size='" + wordCounts[textArray[i]] + "'>" + textArray[i] + " </font>" ;
+			}
 		}
 		text = text + ".</p>";
-		//alert(text);
+
+		
 		if (notFirst) {
+			//fade out previously added content and fade in new versions
 			$("#theContent").fadeOut();
 			$("#theContent").remove();
 			var contentObject = $(text);
@@ -65,6 +81,7 @@ function main() {
 			
 		} 
 		else {
+			//first pass... remove the search input and add the results
 			$("#removeMe").remove();
 			$("#content").append(text);
 			$("#wordCountsDiv").append(wordCountsString);
