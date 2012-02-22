@@ -21,7 +21,7 @@ function main() {
 	
 	//define callback function that will run each time spotter polls
 	s.register(function(tweet) {
-		var text = "<p id='theContent'>";
+		var text = "<p id='theContent' style='border-style:solid; border-width:5px; padding:10px'>";
 		var newTweet = new Array();
 		newTweet = tweet.text.split(" ");
 		
@@ -48,7 +48,6 @@ function main() {
 		textArray.sort(randomSort);
 		textArray.sort(randomSort);
 
-		
 		//assemble the textArray in to a string and add font sizes to words that appear multiple times
 		for (var i=0 ; i<textArray.length ; i++) {
 			if (wordCounts[textArray[i].toLowerCase()] === 1) {
@@ -72,19 +71,21 @@ function main() {
 			contentObject.hide();
 			$("#content").append(contentObject);
 			contentObject.fadeIn();
+			
+			/** this code displays the word counts
 			$("#theWordCounts").fadeOut();
 			$("#theWordCounts").remove();
 			var wordCountsObject = $(wordCountsString);
 			wordCountsObject.hide();
 			$("#wordCountsDiv").append(wordCountsObject);
 			wordCountsObject.fadeIn();
-			
+			**/
 		} 
 		else {
 			//first pass... remove the search input and add the results
 			$("#removeMe").remove();
 			$("#content").append(text);
-			$("#wordCountsDiv").append(wordCountsString);
+			//$("#wordCountsDiv").append(wordCountsString);
 			notFirst = true;
 		}
 
